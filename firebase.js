@@ -1,8 +1,9 @@
 const admin = require('firebase-admin')
-const serviceAccount = require('./firebase-key.json')
+
+const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG)
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(firebaseConfig),
     storageBucket: 'zhanshuak-6969.firebasestorage.app',
 })
 
