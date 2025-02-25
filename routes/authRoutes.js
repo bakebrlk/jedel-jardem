@@ -63,16 +63,5 @@ router.post('/register', register)
  */
 router.post('/login', login)
 
-/**
- * @swagger
- * /api/auth/logout:
- *   post:
- *     summary: Logout a user
- *     tags: [Auth]
- *     responses:
- *       200:
- *         description: User logged out
- */
-router.post('/logout', logout)
 
 module.exports = router

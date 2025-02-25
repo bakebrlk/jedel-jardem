@@ -9,6 +9,7 @@ const swaggerDocs = require('./swagger.js')
 
 const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes')
+const postRoutes = require('./routes/postRoutes')
 
 const app = express()
 connectDB()
@@ -18,9 +19,11 @@ app.use(helmet())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(cookieParser())
+app.use('/uploads', express.static('uploads'))
 
 swaggerDocs(app)
 
+app.use('/api/posts', postRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 

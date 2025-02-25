@@ -14,6 +14,7 @@ exports.register = async (req, res) => {
             name,
             email,
             phoneNumber,
+            specialisation,
             password: hashedPassword,
             role,
         })
@@ -30,13 +31,13 @@ exports.login = async (req, res) => {
     const { email, password } = req.body
     try {
         const user = await User.findOne({ email })
-        if (!user)
+        if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' })
-
+        }
         const isMatch = await bcrypt.compare(password, user.password)
-        if (!isMatch)
+        if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' })
-
+        }
         const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: '24h',
         })
@@ -48,8 +49,4 @@ exports.login = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Server error' })
     }
-}
-
-exports.logout = (req, res) => {
-    res.clearCookie('token').json({ message: 'Logged out' })
 }
