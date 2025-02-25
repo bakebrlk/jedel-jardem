@@ -1,0 +1,129 @@
+const express = require('express')
+const {
+    getUsers,
+    getUserById,
+    updateUser,
+    deleteUser,
+} = require('../controllers/userController')
+const authMiddleware = require('../middlewares/authMiddleware')
+
+const router = express.Router()
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management endpoints
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved all users
+ *       500:
+ *         description: Server error
+ */
+router.get('/', authMiddleware, getUsers)
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved user data
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/:id', authMiddleware, getUserById)
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Update a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *               specialisation:
+ *                 type: string
+ *               birthYear:
+ *                 type: string
+ *                 format: date
+ *               avatar:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Successfully updated user
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+router.put('/:id', authMiddleware, updateUser)
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Delete a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: Successfully deleted user
+ *       500:
+ *         description: Server error
+ */
+router.delete('/:id', authMiddleware, deleteUser)
+
+module.exports = router
