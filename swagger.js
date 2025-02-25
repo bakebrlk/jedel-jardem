@@ -11,7 +11,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:4000', 
+                url: 'https://jedel-jardem-production.up.railway.app', 
             },
         ],
         components: {
