@@ -14,7 +14,6 @@ exports.register = async (req, res) => {
             name,
             email,
             phoneNumber,
-            specialisation,
             password: hashedPassword,
             role,
         })
